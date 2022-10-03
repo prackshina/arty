@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="text-center">
+                    computação de inventário
+                </h3>
+                <div class="row">
+                    <div class="col-md-8">
+                        <table class="table" id="tabela">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th>
+                                        categoria
+                                    </th>
+                                    <th>
+                                        nome do item
+                                    </th>
+                                    <th>
+                                        sala/setor
+                                    </th>
+                                    <th>
+                                        número patrimonial
+                                    </th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+
+                            <label for="numeroPatrimonial">
+                                número patrimonial
+                            </label>
+                            <input type="text" class="form-control" id="patrimonio" />
+                        </div>
+                        <div class="form-group">
+
+                            <label for="categoria">
+                                categoria
+                            </label>
+                            <input type="text" class="form-control" id="categoria" />
+                        </div>
+                        <div class="form-group">
+
+                            <label for="exampleInputPassword1">
+                                nome do item
+                            </label>
+                            <input type="textd" class="form-control" id="item" />
+                        </div>
+                        <div class="form-group">
+
+
+                            <label for="sala">
+                                sala/setor
+                            </label>
+                            <input type="textd" class="form-control" id="sala" />
+                            
+                            <br>
+                            <button onclick="cadastra()" class="btn btn-success">
+                                cadastrar
+                            </button>
+                            <button class="btn btn-warning">
+                                limpar
+                            </button>
+                            <button onclick ="exclui()" class="btn btn-danger">
+                                excluir
+                            </button>
+                            <button onclick="edita()" class="btn btn-primary">
+                                editar
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</body>
+</html>
+<script>
+    var lista = []
+    var cod = 0
+    function cadastra() {
+        var cat = document.getElementById("categoria").value
+        var nomeItem = document.getElementById("item").value
+        var sala = document.getElementById("sala").value
+        cod++
+        var item = {
+            categoria: cat,
+            nome: nomeItem,
+            sala: sala,
+            cod: cod
+        }
+        lista.push(item)
+        preencheTabela()
+    }
+    function preencheTabela() {
+        limpatabela()
+        for (item of lista) {
+            var linha = "<tr><td>" + item.cod + "</td><td>" + item.categoria + "</td><td>" + item.nome + "</td><td>" + item.sala + "</td></tr>"
+            document.getElementById("tabela").innerHTML += linha
+        }
+    }
+    function limpatabela() {
+        var tabela = document.getElementById("tabela")
+        while (tabela.rows.length > 1) {
+            tabela.deleteRow(1)
+        }
+    }
+    function limpacampo() {
+        document.getElementById("categoria").value = null
+        document.getElementById("item").value = null
+        document.getElementById("sala").value = null
+    }
+    function exclui() {
+        var code = Number(prompt("Digite o código do item que deseja excluir"))
+        var mensagem = "(ERRO) - Item nao Cadastrado"
+        for (item of lista) {
+            if (item.cod == code) {
+                var pos = lista.indexOf(item)
+                lista.splice(pos, 1)
+                mensagem = "item excluido com sucesso"
+                break
+            }
+        }
+        alert(mensagem)
+        preencheTabela()
+    }
+</script>
